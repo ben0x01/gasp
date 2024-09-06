@@ -137,16 +137,3 @@ async def start_deposit(private_key, rpc):
     await deposit_instance.prepare_tx()
     await asyncio.sleep(random.uniform(MIN_DELAY, MAX_DELAY))
     await deposit_instance.approve_and_deposit()
-
-
-if __name__ == "__main__":
-    private_key = "private_key"
-    rpc_url = "https://holesky.drpc.org"
-    try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(start_deposit(private_key, rpc_url))
-    except RuntimeError as e:
-        if str(e) == "Event loop is closed":
-            asyncio.set_event_loop(asyncio.new_event_loop())
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(start_deposit(private_key, rpc_url))
